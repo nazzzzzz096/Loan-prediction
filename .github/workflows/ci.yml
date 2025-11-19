@@ -33,3 +33,14 @@ jobs:
       - name: Run Tests
         run: |
           pytest -v
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker image
+        run: |
+           docker tag loan-api ${{ secrets.DOCKERHUB_USERNAME }}/loan-api:latest
+           docker push ${{ secrets.DOCKERHUB_USERNAME }}/loan-api:latest

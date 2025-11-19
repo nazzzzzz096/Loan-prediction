@@ -1,7 +1,9 @@
 """FastAPI app for loan default prediction service."""
 from fastapi import FastAPI
-from api.app.schemas import LoanApplication
-from api.app.predictor import CreditRiskModel
+from api.schemas import LoanApplication
+from api.predictor import CreditRiskModel
+
+
 
 
 app = FastAPI(title="Loan Default Prediction API")
