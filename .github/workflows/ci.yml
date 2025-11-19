@@ -40,7 +40,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Push Docker image
+      - name: Build the Docker image
         run: |
-           docker tag loan-api ${{ secrets.DOCKERHUB_USERNAME }}/loan-api:latest
-           docker push ${{ secrets.DOCKERHUB_USERNAME }}/loan-api:latest
+          docker build -t loan-api -f api/Dockerfile .
+          
+      - name: Tag image for DockerHub
+        run: |
+          docker tag loan-api ${{ secrets.DOCKERHUB_USERNAME }}/loan-api:latest
+
+      - name: Push image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/loan-api:latest
