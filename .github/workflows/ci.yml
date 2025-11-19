@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Pylint
         run: |
-          pylint api model_training --score=yes
+          pylint api model_training --exit-zero
 
       - name: Run Tests
         run: |

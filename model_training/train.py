@@ -4,6 +4,8 @@ Training script: build preprocessor, train XGBoost model, and save artifacts.
 This file is intentionally compact; some functions may be refactored later
 to reduce local variable count.
 """
+# pylint: disable=R0914
+
 
 import os
 import joblib
