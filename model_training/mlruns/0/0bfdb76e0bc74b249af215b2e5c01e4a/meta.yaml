@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/week45/Loan-prediction/model_training/mlruns/0/0bfdb76e0bc74b249af215b2e5c01e4a/artifacts
+end_time: 1763555300184
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0bfdb76e0bc74b249af215b2e5c01e4a
+run_name: zealous-toad-126
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763555300012
+status: 3
+tags: []
+user_id: nazzzzzz096

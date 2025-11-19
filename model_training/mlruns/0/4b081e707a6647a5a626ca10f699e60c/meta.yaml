@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/week45/Loan-prediction/model_training/mlruns/0/4b081e707a6647a5a626ca10f699e60c/artifacts
+end_time: 1763555643001
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 4b081e707a6647a5a626ca10f699e60c
+run_name: righteous-toad-299
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763555642864
+status: 3
+tags: []
+user_id: nazzzzzz096
