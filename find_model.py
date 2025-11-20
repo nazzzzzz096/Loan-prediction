@@ -1,6 +1,6 @@
 import os
 
-print("\n🔍 Searching for model.pkl...\n")
+print("\n Searching for model.pkl...\n")
 
 for root, dirs, files in os.walk(".", topdown=True):
     for file in files:

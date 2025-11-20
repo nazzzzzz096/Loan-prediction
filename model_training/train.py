@@ -44,47 +44,47 @@ os.makedirs(MODEL_OUTPUT_DIR, exist_ok=True)
 def train_model():
     """Run full training: preprocess, SMOTE, fit XGBoost, evaluate, and log artifacts."""
 
-    print("📌 Loading 200k sample...")
+    print(" Loading 200k sample...")
     df = load_raw_data(DATA_PATH)
 
-    print("📌 Creating target...")
+    print(" Creating target...")
     df = create_target(df)
 
-    print("📌 Cleaning term column...")
+    print(" Cleaning term column...")
     df = clean_term_column(df)
 
-    print("📌 Applying domain imputations...")
+    print(" Applying domain imputations...")
     df = apply_domain_imputation(df)
 
-    print("📌 Selecting features...")
+    print(" Selecting features...")
     df = df[FEATURES_TO_USE + ["is_default"]]
 
     x = df[FEATURES_TO_USE]
     y = df["is_default"]
 
-    print(f"📌 Final data shape: {x.shape}")
+    print(f" Final data shape: {x.shape}")
 
     # Train-test split
     x_train, x_test, y_train, y_test = train_test_split(
         x, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    print("📌 Building preprocessor...")
+    print(" Building preprocessor...")
     preprocessor = build_preprocessor(x_train)
 
-    print("📌 Fitting preprocessor...")
+    print(" Fitting preprocessor...")
     preprocessor.fit(x_train)
 
     x_train_trans = preprocessor.transform(x_train)
     x_test_trans = preprocessor.transform(x_test)
 
     # SMOTE
-    print("📌 Applying SMOTE...")
+    print(" Applying SMOTE...")
     sm = SMOTE(random_state=42)
     x_train_res, y_train_res = sm.fit_resample(x_train_trans, y_train)
 
     # Train XGBoost
-    print("📌 Training XGBoost...")
+    print(" Training XGBoost...")
     model = XGBClassifier(
         n_estimators=450,
         max_depth=6,
@@ -95,7 +95,7 @@ def train_model():
     model.fit(x_train_res, y_train_res)
 
     # Evaluation
-    print("📌 Evaluating model...")
+    print(" Evaluating model...")
     y_proba = model.predict_proba(x_test_trans)[:, 1]
     threshold = 0.20
     y_pred = (y_proba > threshold).astype(int)
@@ -133,7 +133,7 @@ def train_model():
         mlflow.log_artifact(pre_path)
         mlflow.log_artifact(model_path)
 
-    print("🎉 Training complete! Model + Preprocessor saved.")
+    print(" Training complete! Model + Preprocessor saved.")
 
 
 if __name__ == "__main__":

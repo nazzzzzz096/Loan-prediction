@@ -21,10 +21,24 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Install dependencies
+      # --------------------------
+      # PIP CACHE (speeds up CI)
+      # --------------------------
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # --------------------------
+      # INSTALL DEPENDENCIES (with retries + timeout)
+      # --------------------------
+      - name: Install dependencies (with retry protection)
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install --default-timeout=200 --retries=10 --no-cache-dir -r requirements.txt
 
       - name: Run Pylint
         run: |
@@ -34,16 +48,22 @@ jobs:
         run: |
           pytest -v
 
+      # --------------------------
+      # DOCKER AUTH
+      # --------------------------
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # --------------------------
+      # BUILD DOCKER IMAGE
+      # --------------------------
       - name: Build the Docker image
         run: |
           docker build -t loan-api -f api/Dockerfile .
-          
+
       - name: Tag image for DockerHub
         run: |
           docker tag loan-api ${{ secrets.DOCKERHUB_USERNAME }}/loan-api:latest
