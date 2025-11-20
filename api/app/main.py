@@ -13,7 +13,7 @@ credit_model = CreditRiskModel()
 @app.post("/predict")
 def predict_loan_default(payload: LoanApplication):
     """ used for prediction using trained ML model"""
-    data = payload.dict()
+    data = payload.model_dump()
     result = credit_model.predict(data)
     return result
 
