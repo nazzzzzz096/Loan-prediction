@@ -17,7 +17,7 @@ def test_model_can_predict():
         "home_ownership": "RENT",
         "dti": 18.5,
         "open_acc": 7,
-        "total_acc": 20,
+        "total_acc": 19,
         "revol_bal": 8000,
         "mort_acc": 2,
         "inq_last_12m": 1,
